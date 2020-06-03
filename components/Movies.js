@@ -1,81 +1,78 @@
-import { useQuery } from '@apollo/react-hooks'
-import { NetworkStatus } from 'apollo-client'
-import gql from 'graphql-tag'
-import ErrorMessage from './ErrorMessage'
-import PostUpvoter from './PostUpvoter'
+import { useQuery } from '@apollo/react-hooks';
+import { NetworkStatus } from 'apollo-client';
+import gql from 'graphql-tag';
 
-export const ALL_POSTS_QUERY = gql`
-  query allPosts($first: Int!, $skip: Int!) {
-    allPosts(orderBy: createdAt_DESC, first: $first, skip: $skip) {
-      id
+export const ALL_MOVIE_QUERY = gql`
+  query allMovie($limit: Int!, $offset: Int!) {
+    allMovie(limit: $limit, offset: $offset, sort: { title: ASC }) {
       title
-      votes
-      url
-      createdAt
-    }
-    _allPostsMeta {
-      count
+      slug {
+        current
+      }
+      _id
+      releaseDate
     }
   }
-`
-export const allPostsQueryVars = {
-  skip: 0,
-  first: 10,
-}
+`;
+export const allMovieQueryVars = {
+  limit: 10,
+  offset: 0,
+};
 
-export default function PostList() {
+export default function Movies() {
   const { loading, error, data, fetchMore, networkStatus } = useQuery(
-    ALL_POSTS_QUERY,
+    ALL_MOVIE_QUERY,
     {
-      variables: allPostsQueryVars,
+      variables: allMovieQueryVars,
       // Setting this value to true will make the component rerender when
       // the "networkStatus" changes, so we are able to know if it is fetching
       // more data
       notifyOnNetworkStatusChange: true,
     }
-  )
+  );
 
-  const loadingMorePosts = networkStatus === NetworkStatus.fetchMore
+  const loadingMoreMovie = networkStatus === NetworkStatus.fetchMore;
 
-  const loadMorePosts = () => {
+  const loadMoreMovie = () => {
     fetchMore({
       variables: {
-        skip: allPosts.length,
+        offset: allMovie.length,
+        limit: 10,
       },
       updateQuery: (previousResult, { fetchMoreResult }) => {
         if (!fetchMoreResult) {
-          return previousResult
+          return previousResult;
         }
         return Object.assign({}, previousResult, {
-          // Append the new posts results to the old one
-          allPosts: [...previousResult.allPosts, ...fetchMoreResult.allPosts],
-        })
+          // Append the new Movie results to the old one
+          allMovie: [...previousResult.allMovie, ...fetchMoreResult.allMovie],
+        });
       },
-    })
-  }
+    });
+  };
 
-  if (error) return <ErrorMessage message="Error loading posts." />
-  if (loading && !loadingMorePosts) return <div>Loading</div>
+  if (error) return <pre>eRROR LOADING MOVEI</pre>;
+  if (loading && !loadingMoreMovie) return <div>Loading</div>;
 
-  const { allPosts, _allPostsMeta } = data
-  const areMorePosts = allPosts.length < _allPostsMeta.count
+  const { allMovie } = data;
+  // får ikke metadata fra sanity, f.eks totalt antall filmer.
+  const areMoreMovie = true;
 
   return (
     <section>
       <ul>
-        {allPosts.map((post, index) => (
-          <li key={post.id}>
+        {allMovie.map((movie, index) => (
+          <li key={movie._id}>
             <div>
               <span>{index + 1}. </span>
-              <a href={post.url}>{post.title}</a>
-              <PostUpvoter id={post.id} votes={post.votes} />
+              <a href="#">{movie.title}</a>
             </div>
           </li>
         ))}
       </ul>
-      {areMorePosts && (
-        <button onClick={() => loadMorePosts()} disabled={loadingMorePosts}>
-          {loadingMorePosts ? 'Loading...' : 'Show More'}
+      {areMoreMovie && (
+        <button onClick={() => loadMoreMovie()} disabled={loadingMoreMovie}>
+          {loadingMoreMovie ? 'Loading...' : 'Show More'}
         </button>
       )}
       <style jsx>{`
@@ -117,5 +114,5 @@ export default function PostList() {
         }
       `}</style>
     </section>
-  )
+  );
 }
