@@ -1,24 +1,21 @@
+import { withFirebase } from "../firebase";
 import * as React from "react";
 import Router from "next/router";
-import {useInput} from "../../hooks/use-input";
-import {withFirebase} from "../firebase";
+import { useInput } from "../../hooks/use-input";
 
-const SignUpForm = props => {
+const LoginForm = props => {
 
     const { value:email, bind:bindEmail, reset:resetEmail } = useInput("");
     const { value:password, bind:bindPassword, reset:resetPassword } = useInput("");
-    const { value:passwordRepeat, bind:bindPasswordRepeat, reset:resetPasswordRepeat } = useInput("");
 
     const isInvalid =
-        password !== passwordRepeat ||
         password === '' ||
-        passwordRepeat === '' ||
         email === '';
 
     const handleSubmit = event => {
         event.preventDefault();
         props.firebase
-            .createUserWithEmailAndPassword(email, password)
+            .signInWithEmailAndPassword(email, password)
             .then(authUser => {
                 Router.push("/mypage")
             })
@@ -38,13 +35,10 @@ const SignUpForm = props => {
                 Passord
                 <input {...bindPassword} type="password"/>
             </label>
-            <label>
-                Gjenta passord
-                <input {...bindPasswordRepeat} type="password"/>
-            </label>
-            <button disabled={isInvalid} type="submit">Registrer</button>
+            <button disabled={isInvalid} type="submit">Logg inn</button>
         </form>
-    );
+    )
+
 };
 
-export default withFirebase(SignUpForm);
+export default withFirebase(LoginForm);

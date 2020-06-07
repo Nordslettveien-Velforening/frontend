@@ -1,11 +1,14 @@
-import Firebase, {FirebaseContext} from "./firebase";
+import * as React from "react";
+import { withAuthentication, LoginToggle } from "./authentication";
 
-export default function App({ children }) {
-  return (
-      <FirebaseContext.Provider value={new Firebase()}>
-          <main>
-          {children}
-          <style jsx global>{`
+class App extends React.Component {
+
+    render() {
+        return (
+                <main>
+                    <LoginToggle/>
+                    {this.props.children}
+                    <style jsx global>{`
             * {
               font-family: Menlo, Monaco, 'Lucida Console', 'Liberation Mono',
                 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Courier New',
@@ -45,7 +48,9 @@ export default function App({ children }) {
               outline: none;
             }
           `}</style>
-        </main>
-    </FirebaseContext.Provider>
-  )
+                </main>
+        )
+    }
 }
+
+export default withAuthentication(App);

@@ -1,10 +1,10 @@
+import React from "react";
 import App from '../components/App';
-import Movies from '../components/Movies';
 import { withApollo } from '../lib/apollo';
 
 const IndexPage = () => (
   <App>
-    <Movies />
+    <h1>Nordslettveien velforening</h1>
   </App>
 );
 

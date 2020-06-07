@@ -1,36 +1,21 @@
 import React from "react";
 import App from "../components/App";
-import { useInput } from "../hooks/use-input";
+import LoginForm from "../components/login/login-form";
+import Link from "next/link";
+import { withAuthentication } from "../components/authentication";
 
-const LoginPage = () => {
+const LoginPage = props => {
 
-    const { value:email, bind:bindEmail, reset:resetEmail } = useInput("");
-    const { value:password, bind:bindPassword, reset:resetPassword } = useInput("");
-
-    const handleSubmit = (evt) => {
-        evt.preventDefault();
-        alert(`Submitting Name ${email} ${password}`);
-        resetEmail();
-        resetPassword();
-    };
-
-   return (
+    return (
         <App>
-            <form onSubmit={handleSubmit}>
-                <label>
-                    E-post
-                    <input {...bindEmail} type="email"/>
-                </label>
-                <label>
-                    Passord
-                    <input {...bindPassword} type="password"/>
-                </label>
-                <button type="submit">Logg inn</button>
-            </form>
+            <h1>Logg inn</h1>
+            <LoginForm/>
+            <p>
+                <Link href={"/signup"}><a>Registrer ny bruker</a></Link>
+            </p>
         </App>
     );
-
 };
 
-export default LoginPage;
+export default withAuthentication(LoginPage);
 
