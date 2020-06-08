@@ -1,13 +1,16 @@
 import * as React from "react";
+import { useState } from "react";
 import Router from "next/router";
-import {useInput} from "../../hooks/use-input";
-import {withFirebase} from "../firebase";
+import { useInput } from "../../hooks/use-input";
+import { withFirebase } from "../firebase";
+import { ErrorMessage } from "../util";
 
 const SignUpForm = props => {
 
     const { value:email, bind:bindEmail, reset:resetEmail } = useInput("");
     const { value:password, bind:bindPassword, reset:resetPassword } = useInput("");
     const { value:passwordRepeat, bind:bindPasswordRepeat, reset:resetPasswordRepeat } = useInput("");
+    const [error, setError] = useState(false);
 
     const isInvalid =
         password !== passwordRepeat ||
@@ -23,7 +26,8 @@ const SignUpForm = props => {
                 Router.push("/mypage")
             })
             .catch(error => {
-                console.error("Error", error)
+                // TODO: Bruk feilkode og map til norsk tekst.
+                setError(error.message)
             });
         return false;
     };
@@ -43,6 +47,7 @@ const SignUpForm = props => {
                 <input {...bindPasswordRepeat} type="password"/>
             </label>
             <button disabled={isInvalid} type="submit">Registrer</button>
+            {error && <ErrorMessage text={error}/>}
         </form>
     );
 };

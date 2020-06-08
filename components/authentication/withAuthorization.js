@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { withFirebase } from '../firebase';
 import Router from "next/router";
-import LoadingIndicator from "../util/loading-indicator";
+import { LoadingIndicator } from "../util";
 
 const withAuthorization = condition => Component => {
     const WithAuthorization = props => {

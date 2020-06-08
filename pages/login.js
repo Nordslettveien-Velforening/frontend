@@ -12,6 +12,7 @@ const LoginPage = props => {
             <LoginForm/>
             <p>
                 <Link href={"/signup"}><a>Registrer ny bruker</a></Link>
+                <Link href={"/glemt-passord"}><a>Glemt passord</a></Link>
             </p>
         </App>
     );

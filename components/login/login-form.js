@@ -1,12 +1,15 @@
 import { withFirebase } from "../firebase";
 import * as React from "react";
+import { useState } from "react";
 import Router from "next/router";
 import { useInput } from "../../hooks/use-input";
+import { ErrorMessage } from "../util";
 
 const LoginForm = props => {
 
     const { value:email, bind:bindEmail, reset:resetEmail } = useInput("");
     const { value:password, bind:bindPassword, reset:resetPassword } = useInput("");
+    const [error, setError] = useState(false);
 
     const isInvalid =
         password === '' ||
@@ -20,7 +23,8 @@ const LoginForm = props => {
                 Router.push("/mypage")
             })
             .catch(error => {
-                console.error("Error", error)
+                // TODO: Bruk feilkode og map til norsk tekst.
+                setError(error.message)
             });
         return false;
     };
@@ -36,6 +40,7 @@ const LoginForm = props => {
                 <input {...bindPassword} type="password"/>
             </label>
             <button disabled={isInvalid} type="submit">Logg inn</button>
+            {error && <ErrorMessage text={error}/>}
         </form>
     )
 
