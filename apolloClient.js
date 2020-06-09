@@ -8,7 +8,7 @@ export default function createApolloClient(initialState, ctx) {
   return new ApolloClient({
     ssrMode: Boolean(ctx),
     link: new HttpLink({
-      uri: 'https://suz75o09.api.sanity.io/v1/graphql/production/default', // Server URL (must be absolute)
+      uri: 'https://sqmglzm4.api.sanity.io/v1/graphql/production/default', // Server URL (must be absolute)
       credentials: 'same-origin', // Additional fetch() options like `credentials` or `headers`
     }),
     cache: new InMemoryCache().restore(initialState),
