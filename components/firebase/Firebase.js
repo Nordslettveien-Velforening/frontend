@@ -2,13 +2,13 @@ import firebase from "firebase/app";
 import "firebase/auth";
 
 const config = {
-    apiKey: "AIzaSyCoCW5vyx_2U7BtsdOpnrbnyC84yWL91Eg",
-    authDomain: "fir-test-e898d.firebaseapp.com",
-    databaseURL: "https://fir-test-e898d.firebaseio.com",
-    projectId: "fir-test-e898d",
-    storageBucket: "fir-test-e898d.appspot.com",
-    messagingSenderId: "709527243664",
-    appId: "1:709527243664:web:2e044a3c2f2f23c9a70115"
+    apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+    authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+    databaseURL: process.env.NEXT_PUBLIC_FIREBASE_DATABASE_URL,
+    projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+    storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+    appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID
 };
 
 class Firebase {
