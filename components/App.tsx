@@ -1,5 +1,5 @@
 import * as React from "react";
-import { withAuthentication, LoginToggle } from "./authentication";
+import { LoginToggle } from "./authentication";
 
 class App extends React.Component {
 
@@ -53,4 +53,4 @@ class App extends React.Component {
     }
 }
 
-export default withAuthentication(App);
+export default App;
