@@ -4,11 +4,11 @@ import { Grommet } from 'grommet';
 import { theme } from '../lib/theme';
 import { AuthContextProvider } from "../components/authentication"
 
-const MyApp = ({ Component, props }) => (
+const MyApp = ({ Component, pageProps }) => (
     <FirebaseContext.Provider value={new Firebase()}>
         <AuthContextProvider>
             <Grommet theme={theme}>
-                <Component {...props}/>
+                <Component {...pageProps}/>
             </Grommet>
         </AuthContextProvider>
     </FirebaseContext.Provider>

@@ -52,6 +52,10 @@ export class Firebase {
     resetPassword = email =>
         this.auth.sendPasswordResetEmail(email);
 
+    confirmPasswordReset = ({code, password}): Promise<void> => {
+        return this.auth.confirmPasswordReset(code, password)
+    } 
+
     updatePassword = password =>
         this.auth.currentUser.updatePassword(password);
 
