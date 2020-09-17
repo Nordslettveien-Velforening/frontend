@@ -1,16 +1,10 @@
-import Link from 'next/link';
 import Layout from "../components/ui/layout/layout";
+import Stream from '../components/stream/stream';
 
 const IndexPage = () => {
-    let slug = 'om-velforeningen';
     return (
         <Layout>
-            <h1>Nordslettveien</h1>
-            <div>
-                <Link href="/artikkel/[slug]" as={`/artikkel/${slug}`}>
-                    <a>Om velforeningen</a>
-                </Link>
-            </div>
+            <Stream/>
         </Layout>
     );
 };

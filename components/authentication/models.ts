@@ -1,3 +1,5 @@
+export type userId = string
+
 export type UserBase = {
     email: string,
     givenName: string,
@@ -7,7 +9,7 @@ export type UserBase = {
 }
 
 export type User = UserBase & {
-    uid: string
+    uid: userId
 }
 
 export type UserSignup = UserBase & {

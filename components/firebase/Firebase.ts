@@ -15,7 +15,7 @@ const config = {
 
 export class Firebase {
     auth: firebase.auth.Auth;
-    private db: firebase.firestore.Firestore;
+    db: firebase.firestore.Firestore;
 
     constructor() {
         if (!firebase.apps.length) {

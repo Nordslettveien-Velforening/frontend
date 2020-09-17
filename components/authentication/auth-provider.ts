@@ -34,9 +34,16 @@ export const useAuthProvider = (): AuthProvider => {
             authUser => {
                 if (authUser) {
                     firebase.getUser(authUser.uid).then(user => {
-                        setUser(user);
-                        setIsLoggedIn(true);
-                        setIsLoading(false)
+                        if (user) {
+                            user.uid = authUser.uid
+                            setUser(user);
+                            setIsLoggedIn(true);
+                            setIsLoading(false)
+                        } else {
+                            setIsLoggedIn(false);
+                            setUser(undefined);
+                            setIsLoading(false)
+                        }
                     })
                 } else {
                     // TODO: Find a better solution.

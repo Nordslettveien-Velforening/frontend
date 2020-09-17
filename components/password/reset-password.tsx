@@ -74,7 +74,6 @@ const ResetPassword = props => {
                         <Flex justify="flex-end">
                             <Button
                                 type="submit"
-                                colorScheme="purple"
                                 isLoading={props.isSubmitting}
                             >
                                 Send

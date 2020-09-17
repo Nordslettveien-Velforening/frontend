@@ -96,7 +96,6 @@ const LoginForm = () => {
                             <NextLink href={"/glemt-passord"}><Link>Glemt passord</Link></NextLink>
                             <Button
                                 type="submit"
-                                colorScheme="purple"
                                 isLoading={props.isSubmitting}
                             >
                                 Logg inn

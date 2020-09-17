@@ -167,7 +167,6 @@ const SignUpForm = () => {
                             <Text>Allerede registrert? <NextLink href={"/login"}><Link>Logg inn</Link></NextLink></Text>
                             <Button
                                 type="submit"
-                                colorScheme="purple"
                                 isLoading={props.isSubmitting}
                             >
                                 Registrer

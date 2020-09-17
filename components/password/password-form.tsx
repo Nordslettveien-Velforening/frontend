@@ -46,7 +46,6 @@ const PasswordForm = ({onSubmit}: PasswordFormProps) => {
                         <Flex justify="flex-end">
                             <Button
                                 type="submit"
-                                colorScheme="purple"
                                 isLoading={props.isSubmitting}
                                 isDisabled={!props.dirty || !props.isValid}
                             >

@@ -27,7 +27,6 @@ const MyPage = () => {
             <Tabs
                 mt={8}
                 variant="soft-rounded"
-                colorScheme="purple"
             >
                 <TabList>
                     <PillTab>Innstillinger</PillTab>
