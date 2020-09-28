@@ -1,0 +1,14 @@
+@import "../../styles/1_settings";
+
+.callout {
+  background-color: $color-highlight-secondary;
+  padding: $spacer;
+
+  button {
+    @include button($color-brand)
+  }
+
+  a {
+    @include link($color-highlight)
+  }
+}

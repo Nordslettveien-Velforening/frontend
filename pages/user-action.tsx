@@ -26,9 +26,9 @@ const UserActionPage = ({mode, code}) => {
     }
 
     return (
-        <App>
+        <>
             {content()}
-        </App>
+        </>
     )
 };
 

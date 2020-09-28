@@ -1,15 +1,15 @@
 import Firebase, { FirebaseContext } from "../components/firebase";
 import * as React from "react";
-import { Grommet } from 'grommet';
-import { theme } from '../lib/theme';
 import { AuthContextProvider } from "../components/authentication"
+import "../styles/index.scss"
+import App from "../components/App";
 
 const MyApp = ({ Component, pageProps }) => (
     <FirebaseContext.Provider value={new Firebase()}>
         <AuthContextProvider>
-            <Grommet theme={theme}>
+            <App>
                 <Component {...pageProps}/>
-            </Grommet>
+            </App>
         </AuthContextProvider>
     </FirebaseContext.Provider>
 );

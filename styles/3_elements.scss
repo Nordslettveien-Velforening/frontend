@@ -1,0 +1,84 @@
+// Styling for bare HTML elements (like H1, A, etc.). These come with default styling from the browser so we can redefine them here.
+@import "1_settings";
+
+body {
+  font-family: "Catamaran", sans-serif;
+}
+
+@mixin link($color: $color-brand) {
+  background: none;
+  border: none;
+  margin: 0;
+  padding: 0;
+  color: $color;
+  font-size: 1rem;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+@mixin button ($bg: $color-highlight, $color: #fff) {
+  background: $bg;
+  border: none;
+  margin: 0;
+  padding: $spacer-s $spacer;
+  color: $color;
+  font-size: $font-s;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 10rem;
+}
+
+a {
+  @include link();
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+h1 {
+  font-size: $font-xl;
+  font-weight: normal;
+  margin: 0 0 $spacer 0;
+}
+
+h2 {
+  font-size: $font-l;
+  margin: 0 0 $spacer-s 0;
+}
+
+h3 {
+  font-size: $font-normal;
+  font-weight: bold;
+  margin: 0;
+}
+
+// Forms
+
+label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: $spacer;
+}
+
+textarea,
+input[type]:not([type=button]):not([type=submit]):not([type=reset]) {
+  display: block;
+  border: 2px solid #C4C4C4;
+  border-radius: 4px;
+  padding: $spacer-s;
+  font-size: 1rem;
+  width: 100%;
+}
+
+button {
+  @include button();
+
+  &[disabled] {
+    @include button($color-font-light);
+    cursor: default;
+  }
+}

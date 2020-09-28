@@ -1,0 +1,43 @@
+@import "../../../styles/1_settings";
+
+.menu-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: $spacer-xl;
+  background: $color-brand;
+  color: #fff;
+  padding: 0 $spacer-l;
+
+  &__main-menu, &__secondary-menu {
+    line-height: $spacer-l;
+    display: flex;
+  }
+
+  nav {
+    line-height: $spacer-l;
+    border-top: 1px solid transparent;
+    border-bottom: 1px solid transparent;
+    margin-right: $spacer-l;
+
+    &:last-child {
+      margin-right: 0;
+    }
+
+    &:hover {
+      border-bottom-color: #fff;
+    }
+  }
+
+  a, button {
+    display: inline-block;
+    color: #fff;
+    text-transform: none;
+    font-weight: normal;
+    line-height: $spacer-l;
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+}
