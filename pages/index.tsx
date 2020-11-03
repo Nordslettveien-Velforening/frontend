@@ -1,6 +1,5 @@
-import { Main, Heading, Paragraph, Grid, Box } from 'grommet';
+import { Main, Heading, Box } from 'grommet';
 import Link from 'next/link';
-import { withApollo } from '../lib/apollo';
 
 const IndexPage = () => {
   let slug = 'om-velforeningen';
@@ -18,4 +17,4 @@ const IndexPage = () => {
   );
 };
 
-export default withApollo({ ssr: true })(IndexPage);
+export default IndexPage;

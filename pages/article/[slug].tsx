@@ -1,36 +1,50 @@
+import React, { useEffect, useState } from "react";
 import { useRouter } from 'next/router';
-import { useQuery } from '@apollo/react-hooks';
-import gql from 'graphql-tag';
-import { withApollo } from '../../lib/apollo';
+const BlockContent = require('@sanity/block-content-to-react')
+import DefaultErrorPage from 'next/error'
+import { getRootPage, RootPage } from "../../integrations/sanityClient";
+import Accordion from "../../components/ui/accordion/accordion";
 
-export const SIMPLE_PAGE_BY_SLUG_QUERY = gql`
-  query simplePageBySlug($slug: String!) {
-    allSimplePage(where: { slug: { current: { eq: $slug } } }) {
-      _id
-      _updatedAt
-      title
-      contentRaw
-    }
-  }
-`;
-
-let SimplePage = () => {
+const SimplePage = () => {
   const router = useRouter();
-  const { slug } = router.query;
-  const { loading, error, data } = useQuery(SIMPLE_PAGE_BY_SLUG_QUERY, {
-    variables: { slug },
-  });
+  const [loading, setLoading] = useState<boolean>()
+  const [error, setError] = useState();
+  const [page, setPage] = useState<RootPage>();
+  const { slug } = Array.isArray(router.query) ? router.query[0] : router.query;
 
-  if (error) return <pre>Kunne ikke laste side.</pre>;
+  useEffect(() => {
+    if (slug) {
+      setLoading(true)
+      getRootPage(slug).then(page => {
+        setPage(page)
+        setLoading(false)
+      })
+    }
+  }, [slug])
+
+  if(!slug) return null;
+
+  if (error)  {
+    return <DefaultErrorPage statusCode={500} />
+}
   if (loading) return <div>Loading</div>;
+  if (!page) return <DefaultErrorPage statusCode={404} />
 
-  const { allSimplePage } = data;
-
+  console.log(page)
   return (
     <section>
-      <code>{JSON.stringify(allSimplePage)}</code>
+      <h1>{page.title}</h1>
+      <BlockContent blocks={page.body}/>
+      <Accordion>
+        { page.subpages.map(subpage => (
+            <div key={subpage.id} title={subpage.title} id={subpage.id}>
+              <BlockContent blocks={subpage.body}/>
+            </div>
+        ))}
+      </Accordion>
+
     </section>
   );
 };
 
-export default withApollo({ ssr: true })(SimplePage);
+export default SimplePage;
