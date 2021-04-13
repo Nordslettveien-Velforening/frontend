@@ -1,12 +1,13 @@
 import React from "react";
-import Router from 'next/router';
-import { useFirebase } from '../firebase/context';
+import { useRouter } from 'next/router';
+import { useFirebase } from '../firebase';
 import { Button, Flex, FormControl, FormErrorMessage, FormLabel, Input, Stack, useToast } from "@chakra-ui/react";
 import { Field, Form, Formik } from 'formik';
 import * as Yup from "yup";
 
 const ConfirmPasswordResetForm = ({code}) => {
 
+    const router = useRouter();
     const firebase = useFirebase();
     const toast = useToast();
 
@@ -21,7 +22,7 @@ const ConfirmPasswordResetForm = ({code}) => {
                     duration: 7000,
                     isClosable: true
                 })
-                Router.push("/login")
+                router.push("/login")
             })
             .catch(e => {
                 setSubmitting(false)

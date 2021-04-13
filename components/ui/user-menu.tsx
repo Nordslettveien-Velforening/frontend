@@ -1,15 +1,19 @@
 import * as React from "react";
-import { Button, Link, Menu, MenuButton, MenuDivider, MenuItem, MenuList, MenuOptionGroup } from "@chakra-ui/react";
+import { Button, forwardRef, Link, Menu, MenuButton, MenuDivider, MenuItem, MenuList, MenuOptionGroup } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { BiChevronDown } from "react-icons/bi";
 import { useAuth } from "../authentication";
-import Router from "next/router";
+import { useRouter } from "next/router";
 
 const UserMenu = () => {
     const { user, logout } = useAuth();
+    const router = useRouter();
 
     const onLogout = () => {
-        logout().then(() => Router.push("/"));
+        logout().then(() => {
+            console.log("user-menu: Logout completed. Redirecting to /");
+            router.push("/")
+        })
     }
 
     if (!user) {
@@ -51,7 +55,7 @@ const UserMenu = () => {
     );
 };
 
-const MenuLink = (props) => {
+const MenuLink = forwardRef((props, _) => {
     return (
         <Link
             display="block"
@@ -64,6 +68,6 @@ const MenuLink = (props) => {
             {props.children}
         </Link>
     )
-}
+})
 
 export default UserMenu;

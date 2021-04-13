@@ -1,5 +1,5 @@
 import * as React from "react";
-import Router from "next/router";
+import { useRouter } from "next/router";
 import { Field, Form, Formik } from 'formik';
 import { useAuth } from "../authentication";
 import {
@@ -10,7 +10,8 @@ import {
     FormLabel,
     Input,
     InputGroup,
-    InputLeftAddon, Link,
+    InputLeftAddon,
+    Link,
     Stack,
     Text,
     useToast
@@ -20,6 +21,7 @@ import NextLink from "next/link";
 
 const SignUpForm = () => {
 
+    const router = useRouter();
     const auth = useAuth();
     const toast = useToast();
 
@@ -27,7 +29,7 @@ const SignUpForm = () => {
         auth
             .createUser({email, givenName, surname, mobile, houseNo, password})
             .then(() => {
-                Router.push("/minside")
+                router.push("/minside")
             })
             .catch(e => {
                 console.log(e)

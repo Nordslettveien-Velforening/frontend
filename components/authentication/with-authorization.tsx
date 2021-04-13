@@ -1,23 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import LoadingIndicator from "../util/loading-indicator"
 import { useAuth } from "./context";
-import Router from "next/router";
+import { useRouter } from "next/router";
 
 const withAuthorization = condition => Component => {
     return props => {
-        const auth = useAuth();
+        const { user, isLoading } = useAuth();
+        const router = useRouter();
         const [isAuthorized, setIsAuthorized] = useState(false);
 
         useEffect(() => {
-            if (condition(auth.user) && !auth.isLoading) {
+            if (condition(user) && !isLoading) {
                 setIsAuthorized(true);
             } else {
-                if (!auth.isLoading) {
-                    Router.push("/login")
+                if (!isLoading) {
+                    setIsAuthorized(false)
+                    router.push("/login")
                 }
             }
-        }, [auth.user, auth.isLoading]);
-        return !auth.isLoading && isAuthorized ? <Component {...props}/> : <LoadingIndicator/>
+        }, [user, isLoading]);
+
+        return !isLoading && isAuthorized ? <Component {...props}/> : <LoadingIndicator/>
     }
 };
 

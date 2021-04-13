@@ -1,5 +1,5 @@
 import * as React from "react";
-import Router from "next/router";
+import { useRouter } from "next/router";
 import { useAuth } from "../authentication";
 import { Button, Flex, FormControl, FormErrorMessage, FormLabel, Input, Link, Stack, Text } from "@chakra-ui/react";
 import NextLink from "next/link";
@@ -9,13 +9,14 @@ import * as Yup from "yup";
 
 const LoginForm = () => {
 
+    const router = useRouter();
     const auth = useAuth()
     const toast = useToast()
 
     const handleSubmit = (values, { setSubmitting }) => {
         auth.login({email: values.email, password:  values.password})
             .then(() => {
-                Router.push("/minside")
+                router.push("/minside")
             })
             .catch(e => {
                 setSubmitting(false)
