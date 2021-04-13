@@ -1,19 +1,26 @@
 import * as React from "react";
-import { Button, forwardRef, Link, Menu, MenuButton, MenuDivider, MenuItem, MenuList, MenuOptionGroup } from "@chakra-ui/react";
+import {
+    Button,
+    forwardRef,
+    Link,
+    Menu,
+    MenuButton,
+    MenuDivider,
+    MenuItem,
+    MenuList,
+    MenuOptionGroup
+} from "@chakra-ui/react";
 import NextLink from "next/link";
 import { BiChevronDown } from "react-icons/bi";
 import { useAuth } from "../authentication";
 import { useRouter } from "next/router";
 
 const UserMenu = () => {
-    const { user, logout } = useAuth();
+    const {user, logout} = useAuth();
     const router = useRouter();
 
     const onLogout = () => {
-        logout().then(() => {
-            console.log("user-menu: Logout completed. Redirecting to /");
-            router.push("/")
-        })
+        logout().then(() => router.push("/"));
     }
 
     if (!user) {
@@ -29,7 +36,7 @@ const UserMenu = () => {
             <MenuButton
                 as={Button}
                 aria-label="Options"
-                rightIcon={<BiChevronDown />}
+                rightIcon={<BiChevronDown/>}
                 backgroundColor="transparent"
                 border="none"
                 color="purple.500"
@@ -38,11 +45,11 @@ const UserMenu = () => {
             </MenuButton>
             <MenuList>
                 <MenuOptionGroup>
-                <MenuItem>
-                    <NextLink href="/minside">
-                        <MenuLink>Min side</MenuLink>
-                    </NextLink>
-                </MenuItem>
+                    <MenuItem>
+                        <NextLink href="/minside">
+                            <MenuLink>Min side</MenuLink>
+                        </NextLink>
+                    </MenuItem>
                 </MenuOptionGroup>
                 <MenuDivider/>
                 <MenuOptionGroup>

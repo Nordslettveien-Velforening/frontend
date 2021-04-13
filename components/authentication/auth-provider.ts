@@ -39,9 +39,14 @@ export const useAuthProvider = (): AuthProvider => {
                         setIsLoading(false)
                     })
                 } else {
-                    setIsLoggedIn(false);
-                    setUser(undefined);
-                    setIsLoading(false)
+                    // TODO: Find a better solution.
+                    // setTimeout is a hack to make sure the user is redirected to a non-protected resource
+                    // before setting the state to logged out. Prevents an unwanted redirect to the login page.
+                    setTimeout(() => {
+                        setIsLoggedIn(false);
+                        setUser(undefined);
+                        setIsLoading(false)
+                    }, 1000)
                 }
             }
         );
