@@ -1,9 +1,10 @@
 import { GetServerSideProps } from "next";
-import App from "../components/App";
-import { useFirebase } from '../components/firebase/context';
+import { useFirebase } from '../components/firebase';
 import ConfirmPasswordResetForm from '../components/reset-password/confirm-password-reset-form';
+import Layout from "../components/ui/layout/layout";
+import Card from "../components/ui/elements/card";
 
-type UserActionMode = "resetPassword" | "recoverEmail" | "verifyEmail"
+type UserActionMode = "resetPassword" | "recoverEmail" | "verifyEmail"
 
 const UserActionPage = ({mode, code}) => {
 
@@ -17,7 +18,9 @@ const UserActionPage = ({mode, code}) => {
                 return (
                     <>
                         <h1>Nytt passord</h1>
-                        <ConfirmPasswordResetForm code={code}/>
+                        <Card>
+                            <ConfirmPasswordResetForm code={code}/>
+                        </Card>
                     </>
                 )
             default:
@@ -26,9 +29,9 @@ const UserActionPage = ({mode, code}) => {
     }
 
     return (
-        <App>
+        <Layout>
             {content()}
-        </App>
+        </Layout>
     )
 };
 

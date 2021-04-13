@@ -4,9 +4,10 @@ import { useAuth } from "./context";
 import Router from "next/router";
 
 const withAuthorization = condition => Component => {
-    const WithAuthorization = props => {
+    return props => {
         const auth = useAuth();
         const [isAuthorized, setIsAuthorized] = useState(false);
+
         useEffect(() => {
             if (condition(auth.user) && !auth.isLoading) {
                 setIsAuthorized(true);
@@ -17,9 +18,7 @@ const withAuthorization = condition => Component => {
             }
         }, [auth.user, auth.isLoading]);
         return !auth.isLoading && isAuthorized ? <Component {...props}/> : <LoadingIndicator/>
-    };
-
-    return WithAuthorization
+    }
 };
 
 export default withAuthorization;

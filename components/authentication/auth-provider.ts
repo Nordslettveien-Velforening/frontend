@@ -5,7 +5,7 @@ import { AuthProvider, LoginCredentials, User, UserSignup } from "./models";
 export const useAuthProvider = (): AuthProvider => {
 
     const  firebase = useFirebase();
-    const [user, setUser] = useState<User | void>(undefined);
+    const [user, setUser] = useState<User | void>(undefined);
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(true);
 

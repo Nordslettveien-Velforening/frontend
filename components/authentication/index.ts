@@ -1,13 +1,11 @@
 import { useAuth, withAuthentication } from "./context";
-import withAuthorization from "./withAuthorization";
-import { AuthContextProvider} from "./AuthContextProvider";
-import LoginToggle from "./LoginToggle";
-import { isLoggedIn} from "./authCondition";
+import withAuthorization from "./with-authorization";
+import { AuthContextProvider} from "./auth-context-provider";
+import { isLoggedIn} from "./auth-condition";
 
 export {
     useAuth,
     AuthContextProvider,
-    LoginToggle,
     withAuthentication,
     withAuthorization,
     isLoggedIn

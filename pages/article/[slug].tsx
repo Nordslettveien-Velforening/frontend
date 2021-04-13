@@ -1,49 +1,66 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from 'next/router';
-const BlockContent = require('@sanity/block-content-to-react')
 import DefaultErrorPage from 'next/error'
 import { getRootPage, RootPage } from "../../integrations/sanityClient";
-import Accordion from "../../components/ui/accordion/accordion";
+import Layout from "../../components/ui/layout/layout";
+import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Heading } from "@chakra-ui/react";
+import PageHeading from "../../components/ui/elements/page-heading";
+
+const BlockContent = require('@sanity/block-content-to-react')
 
 const SimplePage = () => {
   const router = useRouter();
-  const [loading, setLoading] = useState<boolean>()
-  const [error, setError] = useState();
+  const [isLoading, setIsLoading] = useState<boolean>(true)
+  const [error, setError] = useState(false);
   const [page, setPage] = useState<RootPage>();
   const { slug } = Array.isArray(router.query) ? router.query[0] : router.query;
 
   useEffect(() => {
     if (slug) {
-      setLoading(true)
+      setIsLoading(true)
       getRootPage(slug).then(page => {
         setPage(page)
-        setLoading(false)
-      })
+        setIsLoading(false)
+      }).catch(() => setError(true))
     }
   }, [slug])
 
-  if(!slug) return null;
+  if(!isLoading && !slug) return <DefaultErrorPage statusCode={404} />
+  if(!isLoading && !page) return <DefaultErrorPage statusCode={404} />
+  if (error) return <DefaultErrorPage statusCode={500} />
 
-  if (error)  {
-    return <DefaultErrorPage statusCode={500} />
-}
-  if (loading) return <div>Loading</div>;
-  if (!page) return <DefaultErrorPage statusCode={404} />
-
-  console.log(page)
   return (
-    <section>
-      <h1>{page.title}</h1>
-      <BlockContent blocks={page.body}/>
-      <Accordion>
-        { page.subpages.map(subpage => (
-            <div key={subpage.id} title={subpage.title} id={subpage.id}>
-              <BlockContent blocks={subpage.body}/>
-            </div>
-        ))}
-      </Accordion>
-
-    </section>
+    <Layout
+        title={page && page.title}
+        contentWidth="34rem"
+        loading={isLoading}
+    >
+      <PageHeading>{page && page.title}</PageHeading>
+      { page && page.subpages && (
+        <Accordion allowToggle={true} py={4}>
+          { page.subpages.map(subpage => (
+              <AccordionItem borderColor="purple.500" key={subpage.id}>
+                <Heading as="h2" mb={0} lineHeight={8}>
+                  <AccordionButton px="0">
+                    <Box flex="1" textAlign="left" color="purple.500" fontWeight="bold">
+                      {subpage.title}
+                    </Box>
+                    <AccordionIcon color="purple.500" />
+                  </AccordionButton>
+                </Heading>
+                <AccordionPanel pb={4}>
+                  <BlockContent blocks={subpage.body}/>
+                </AccordionPanel>
+              </AccordionItem>
+          ))}
+        </Accordion>
+      )}
+      <Box pt={4}>
+        {page && page.body &&
+          <BlockContent blocks={page.body}/>
+        }
+      </Box>
+    </Layout>
   );
 };
 
