@@ -26,6 +26,7 @@ export type ContentSection = {
 const client = sanityClient({
     projectId: "i747gtty",
     dataset: "test",
+    apiVersion: '2021-04-01', // see https://www.sanity.io/help/js-client-api-version
     token: "", // or leave blank to be anonymous user
     useCdn: false // `false` if you want to ensure fresh data
 })
