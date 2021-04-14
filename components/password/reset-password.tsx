@@ -4,8 +4,7 @@ import { Button, Flex, FormControl, FormErrorMessage, FormLabel, Input, Stack, u
 import { Field, Form, Formik } from 'formik';
 import * as Yup from "yup";
 
-
-const ResetPasswordForm = props => {
+const ResetPassword = props => {
 
     const toast = useToast();
 
@@ -88,4 +87,4 @@ const ResetPasswordForm = props => {
     );
 };
 
-export default withFirebase(ResetPasswordForm);
+export default withFirebase(ResetPassword);
