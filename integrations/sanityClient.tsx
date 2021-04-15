@@ -4,6 +4,7 @@ export type BlockContent = []
 
 export type MainMenuItem = {
     id: string,
+    icon: string,
     slug: string,
     title: string
 }
@@ -33,7 +34,7 @@ const client = sanityClient({
 
 export const getMainMenuItems = (): Promise<MainMenuItem[] > => {
     const query = `*[_type== 'rootPage']{
-        'id':_id, title, 'slug': slug.current
+        'id':_id, title, icon, 'slug': slug.current
     }`
     return client.fetch(query)
 }
