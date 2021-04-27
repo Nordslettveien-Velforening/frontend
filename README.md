@@ -6,6 +6,6 @@ Install dependencies
 
 `yarn install` (first time only)
 
-The start it
+Then start it
 
 `yarn dev`
