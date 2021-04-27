@@ -7,7 +7,7 @@ const IndexPage = () => {
         <Layout>
             <h1>Nordslettveien</h1>
             <div>
-                <Link href="/article/[slug]" as={`/article/${slug}`}>
+                <Link href="/artikkel/[slug]" as={`/artikkel/${slug}`}>
                     <a>Om velforeningen</a>
                 </Link>
             </div>

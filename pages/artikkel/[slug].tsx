@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from 'next/router';
 import DefaultErrorPage from 'next/error'
-import { getRootPage, RootPage } from "../../integrations/sanityClient";
+import { ContentSection, getRootPage, RootPage } from "../../integrations/sanityClient";
 import Layout from "../../components/ui/layout/layout";
 import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Heading } from "@chakra-ui/react";
 import PageHeading from "../../components/ui/elements/page-heading";
-
-const BlockContent = require('@sanity/block-content-to-react')
+import BlockContent from "../../components/sanity/block-content";
 
 const SimplePage = () => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState<boolean>(true)
   const [error, setError] = useState(false);
   const [page, setPage] = useState<RootPage>();
+  const [defaultOpenIndex, setDefaultOpenIndex] = useState<number | undefined>(undefined);
   const { slug } = Array.isArray(router.query) ? router.query[0] : router.query;
 
   useEffect(() => {
@@ -20,10 +20,20 @@ const SimplePage = () => {
       setIsLoading(true)
       getRootPage(slug).then(page => {
         setPage(page)
+        // Open content correct content section if url points to this.
+        if (location.hash) {
+          setDefaultOpenIndex(getIndexByHash(location.hash.substring(1), page.subpages))
+        } else {
+          setDefaultOpenIndex(undefined)
+        }
         setIsLoading(false)
       }).catch(() => setError(true))
     }
   }, [slug])
+
+  function getIndexByHash(hash: string, subpages: [ContentSection]) {
+    return subpages.findIndex(page => page.slug === hash);
+  }
 
   if(!isLoading && !slug) return <DefaultErrorPage statusCode={404} />
   if(!isLoading && !page) return <DefaultErrorPage statusCode={404} />
@@ -37,10 +47,10 @@ const SimplePage = () => {
     >
       <PageHeading>{page && page.title}</PageHeading>
       { page && page.subpages && (
-        <Accordion allowToggle={true} py={4}>
+        <Accordion allowToggle={true} defaultIndex={defaultOpenIndex} py={4}>
           { page.subpages.map(subpage => (
               <AccordionItem borderColor="purple.500" key={subpage.id}>
-                <Heading as="h2" mb={0} lineHeight={8}>
+                <Heading as="h2" mb={0} lineHeight={8} id={subpage.slug}>
                   <AccordionButton px="0">
                     <Box flex="1" textAlign="left" color="purple.500" fontWeight="bold">
                       {subpage.title}

@@ -1451,6 +1451,11 @@
   dependencies:
     "@sanity/client" "^1.149.13"
 
+"@sanity/image-url@^0.140.19":
+  version "0.140.22"
+  resolved "https://registry.yarnpkg.com/@sanity/image-url/-/image-url-0.140.22.tgz#7a65f56bb751f7b1c5dfacfadd34ee10fc4f0fde"
+  integrity sha512-CAmQZnj+KM7FSEYiWlIGDit072syicYuAw0w7R2ctMzHiZ4p9mE/g6dBnYqrqFUrw2J+GpJgPt+RVspKP8vdqA==
+
 "@sanity/observable@1.150.1":
   version "1.150.1"
   resolved "https://registry.npmjs.org/@sanity/observable/-/observable-1.150.1.tgz"
@@ -3184,6 +3189,13 @@ native-url@0.3.4:
   integrity sha512-6iM8R99ze45ivyH8vybJ7X0yekIcPf5GgLV5K0ENCbmRcaRIDoj37BC8iLEmaaBfqqb8enuZ5p0uhY+lVAbAcA==
   dependencies:
     querystring "^0.2.0"
+
+next-sanity-image@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/next-sanity-image/-/next-sanity-image-2.0.0.tgz#6a37d6e95eac5ca69272b00a5d95bb508a9726f8"
+  integrity sha512-muDwiQD+k3YTzOsEDNtSTCoiTDxdA0kfzhBKaDdNMd8bJzNGWo5pxk28WMVTTRAmQNiSsncEadlXVGTzoomtzQ==
+  dependencies:
+    "@sanity/image-url" "^0.140.19"
 
 next@^10.1.3:
   version "10.1.3"

@@ -24,8 +24,9 @@ const MenuItem = ({href, title, isSelected, icon}: MenuItemProps) => {
             _notLast={{
                  marginBottom: "1rem"
             }}>
-            <NextLink href={href}>
+            <NextLink href={href} passHref>
                 <Link
+                    href={href}
                     display="grid"
                     gridTemplateColumns="1.5rem 1fr"
                     gridGap="0.5rem"
@@ -49,7 +50,9 @@ const MainMenu = ({menuItems}: MainMenuProps) => {
     const router = useRouter()
 
     const isItemSelected = (href) => {
-        return router.asPath === href
+        const fullPath = router.asPath;
+        const path = fullPath.indexOf("#") > -1 ? fullPath.substring(0, fullPath.indexOf("#")) : fullPath;
+        return path === href
     }
 
     return (
@@ -63,9 +66,9 @@ const MainMenu = ({menuItems}: MainMenuProps) => {
             { menuItems.map(item =>
                 <MenuItem
                     key={item.id}
-                    href={`/article/${item.slug}`}
+                    href={`/artikkel/${item.slug}`}
                     title={item.title}
-                    isSelected={isItemSelected(`/article/${item.slug}`)}
+                    isSelected={isItemSelected(`/artikkel/${item.slug}`)}
                     icon={item.icon && <Icon boxSize="1.5rem" as={BiIcons[item.icon]}/>}
                 />
             )}
