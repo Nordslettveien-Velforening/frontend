@@ -3,6 +3,7 @@ import StreamPost from './stream-post';
 import { getPosts } from './stream-service';
 import { StreamPost as StreamPostModel } from "./models";
 import { useToast } from "@chakra-ui/react";
+import GhostText from "../ui/elements/ghost-text";
 
 const StreamPosts = () => {
 
@@ -24,11 +25,14 @@ const StreamPosts = () => {
     }
 
     return (
-        <div>
+        <>
             {posts.map((post) =>
                 <StreamPost key={post.id} post={post} />
             )}
-        </div>
+            {posts.length === 0 &&
+                <GhostText text="Det er ingen innlegg i Strømmen enda"/>
+            }
+        </>
     )
 }
 
