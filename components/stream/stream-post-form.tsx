@@ -41,7 +41,7 @@ const StreamPostForm = ({ placeholder, onSubmit }: StreamPostFormProps) => {
             <TextEditor placeholder={placeholder} value={postText} onChange={handleValueChange}/>
             <Flex justifyContent="flex-end" overflow="hidden" height={isActive ? "auto": "0"}>
                 <Button type="reset" variant="link" onClick={resetValues}>Avbryt</Button>
-                <Button type="submit" ml={4}>Publiser</Button>
+                <Button type="submit" ml={4} isDisabled={postText.trim().length < 1}>Publiser</Button>
             </Flex>
             <Box mx={-4}>
                 <Embeds urls={urls}/>
