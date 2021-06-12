@@ -1,27 +1,29 @@
-import React, { useState } from "react";
+import React from "react";
 import StreamPostForm from "./stream-post-form"
-import IfLoggedIn from "../util/if-logged-in"
 import StreamPosts from "./stream-posts";
 import Card from "../ui/elements/card";
 import { createPost } from "./stream-service";
 import { v4 as uuid } from "uuid";
 import Router from "next/router";
 import { useAuth } from "../authentication";
-import { useToast } from "@chakra-ui/react";
+import { Grid, Heading, useToast } from "@chakra-ui/react";
+import SignupBanner from "../signup/signup-banner";
+import UserImage from "../ui/elements/user-image";
 
 const Stream = () => {
-    const auth = useAuth();
+    const {user, isLoggedIn, isLoading} = useAuth();
     const toast = useToast()
 
     const onNewPost = (value: string) => {
-        if (auth.user) {
+        if (user) {
             createPost({
                 id: uuid(),
                 content: value,
                 posted: new Date(),
-                postedBy: auth.user,
+                postedBy: user,
                 comments: []
-            }).catch(() => {
+            }).catch(e => {
+                console.log(e)
                 toast({
                     title: "Ooops!",
                     description: "Det oppsto en feil ved lagring av innlegget. Prøv igjen siden.",
@@ -38,11 +40,20 @@ const Stream = () => {
 
     return (
         <>
-            <IfLoggedIn>
-                <Card p={4}>
+            <Heading as="h2" size="md">Strømmen</Heading>
+            {!isLoading &&
+            <Card p={4}>
+                {isLoggedIn &&
+                <Grid templateColumns="auto 1fr" gridGap={2}>
+                    {user && <UserImage user={user}/>}
                     <StreamPostForm placeholder="Skriv et innlegg..." onSubmit={onNewPost}/>
-                </Card>
-            </IfLoggedIn>
+                </Grid>
+                }
+                {!isLoggedIn &&
+                <SignupBanner/>
+                }
+            </Card>
+            }
             <StreamPosts/>
         </>
     )

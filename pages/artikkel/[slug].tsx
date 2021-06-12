@@ -3,8 +3,15 @@ import { useRouter } from 'next/router';
 import DefaultErrorPage from 'next/error'
 import { ContentSection, getRootPage, RootPage } from "../../integrations/sanityClient";
 import Layout from "../../components/ui/layout/layout";
-import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Heading } from "@chakra-ui/react";
-import PageHeading from "../../components/ui/elements/page-heading";
+import {
+  Accordion,
+  AccordionButton,
+  AccordionIcon,
+  AccordionItem,
+  AccordionPanel,
+  Box,
+  Heading
+} from "@chakra-ui/react";
 import BlockContent from "../../components/sanity/block-content";
 
 const SimplePage = () => {
@@ -45,9 +52,9 @@ const SimplePage = () => {
         contentWidth="34rem"
         loading={isLoading}
     >
-      <PageHeading>{page && page.title}</PageHeading>
+      <Heading as="h1">{page && page.title}</Heading>
       { page && page.subpages && (
-        <Accordion allowToggle={true} defaultIndex={defaultOpenIndex} py={4}>
+        <Accordion allowToggle={true} defaultIndex={defaultOpenIndex} mt={4} mb={8}>
           { page.subpages.map(subpage => (
               <AccordionItem borderColor="purple.500" key={subpage.id}>
                 <Heading as="h2" mb={0} lineHeight={8} id={subpage.slug}>
@@ -65,11 +72,9 @@ const SimplePage = () => {
           ))}
         </Accordion>
       )}
-      <Box pt={4}>
-        {page && page.body &&
-          <BlockContent blocks={page.body}/>
-        }
-      </Box>
+      {page && page.body &&
+        <BlockContent blocks={page.body}/>
+      }
     </Layout>
   );
 };

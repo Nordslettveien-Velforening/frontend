@@ -1,9 +1,8 @@
 import React from "react";
 import { isLoggedIn, useAuth, withAuthorization } from "../components/authentication";
-import { Box, chakra, Tab, TabList, TabPanel, TabPanels, Tabs, Text } from "@chakra-ui/react";
+import { Box, chakra, Heading, Tab, TabList, TabPanel, TabPanels, Tabs, Text } from "@chakra-ui/react";
 import Layout from "../components/ui/layout/layout";
 import Error from "next/error";
-import PageHeading from "../components/ui/elements/page-heading";
 import Card from "../components/ui/elements/card";
 import ChangePassword from "../components/password/change-password";
 
@@ -16,7 +15,7 @@ const MyPage = () => {
 
     return (
         <Layout title="Min side" contentWidth="50rem">
-            <PageHeading>Min side</PageHeading>
+            <Heading as="h1">Min side</Heading>
             <Text as="p">Vi har følgende informasjon registrert om deg:</Text>
             <Box pl={6} color="gray.700" borderLeftWidth="2px" borderLeftColor="purple.500">
                 {user.givenName} {user.surname}<br/>

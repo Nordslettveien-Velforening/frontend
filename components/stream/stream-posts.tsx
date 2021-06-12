@@ -2,16 +2,21 @@ import React, { useEffect, useState } from 'react';
 import StreamPost from './stream-post';
 import { getPosts } from './stream-service';
 import { StreamPost as StreamPostModel } from "./models";
-import { useToast } from "@chakra-ui/react";
+import { Flex, Spinner, useToast } from "@chakra-ui/react";
 import GhostText from "../ui/elements/ghost-text";
 
 const StreamPosts = () => {
 
     const toast = useToast()
     const [posts, setPosts] = useState<StreamPostModel[]>([])
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        return getPosts(setPosts, handleError)
+        setIsLoading(true)
+        return getPosts(posts => {
+            setPosts(posts);
+            setIsLoading(false);
+        }, handleError)
     }, [])
 
     function handleError(message: string) {
@@ -26,10 +31,11 @@ const StreamPosts = () => {
 
     return (
         <>
-            {posts.map((post) =>
+            { posts.map((post) =>
                 <StreamPost key={post.id} post={post} />
             )}
-            {posts.length === 0 &&
+            { isLoading && <Flex justify="center" py={4}><Spinner size="xl" thickness="3px"/></Flex> }
+            { !isLoading && posts.length === 0 &&
                 <GhostText text="Det er ingen innlegg i Strømmen enda"/>
             }
         </>
